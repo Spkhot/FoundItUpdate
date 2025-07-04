@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Report a Found Item | FoundIt Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="images/logo.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+    @keyframes backgroundPan {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .animated-gradient {
+      background: linear-gradient(135deg, #6B21A8, #3B82F6, #EC4899, #F59E0B);
+      background-size: 400% 400%;
+      animation: backgroundPan 15s ease infinite;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-white">
+
+<!-- 🔮 Animated Background -->
+<div class="animated-gradient fixed top-0 left-0 w-full h-full z-0"></div>
+
+<!-- 🌟 Content Wrapper -->
+<div class="relative z-10 min-h-screen flex items-center justify-center px-4 py-10">
+  <div class="w-full max-w-2xl">
+
+    <!-- 🎁 Main Card -->
+    <div class="bg-slate-800/50 backdrop-blur-lg border border-white/10 rounded-2xl shadow-2xl p-6 md:p-8">
+
+      <!-- ✨ Header -->
+      <div class="text-center mb-6">
+        <h1 class="text-3xl md:text-4xl font-extrabold">Report a Found Item</h1>
+        <p class="text-slate-300 mt-2">Help someone reunite with what they lost. Fill in the details below.</p>
+      </div>
+
+      <!-- 🧭 Navigation -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+        <a href="index.html" class="bg-white/10 border border-white/20 text-white font-semibold py-2 px-6 rounded-full hover:scale-105 hover:bg-white/20 transition duration-300 text-center">Go Home</a>
+        <a href="all-found.html" class="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold py-2 px-6 rounded-full hover:scale-105 transition duration-300 text-center">I Lost Something</a>
+      </div>
+
+      <!-- 📝 Form Starts -->
+      <form id="foundForm" class="space-y-5" enctype="multipart/form-data">
+
+        <!-- 🧾 Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <input name="productName" placeholder="What is the item?" required class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none" />
+          <select name="category" required class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none">
+            <option value="">Select Category</option>
+            <option value="wallet">Wallet</option>
+            <option value="id">ID Card</option>
+            <option value="key">Keys</option>
+            <option value="documents">Documents</option>
+            <option value="shoes">Shoes</option>
+            <option value="electronics">Electronics</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <input name="location" placeholder="Where did you find it?" required class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none" />
+        <textarea name="description" placeholder="Describe the item (color, brand, unique marks...)" rows="3" required class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none"></textarea>
+        <input name="contact" placeholder="Your Contact (Email/Phone)" required class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none" />
+
+        <!-- 📤 File Upload -->
+        <label for="file-upload" class="w-full flex flex-col items-center justify-center p-6 bg-slate-800/40 border-2 border-dashed border-slate-600 rounded-lg cursor-pointer hover:border-cyan-400 hover:bg-slate-800 transition-all">
+          <svg class="w-8 h-8 mb-2 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+          <span id="file-name" class="text-white/80 font-semibold">Upload a Photo (Required)</span>
+          <input type="file" id="file-upload" name="image" accept="image/*" required class="hidden" />
+        </label>
+
+        <!-- 📧 Email Verification Section -->
+        <fieldset class="border border-slate-700 p-4 rounded-lg">
+          <legend class="px-2 text-sm text-cyan-400 font-semibold">Verification Step</legend>
+          <div class="flex flex-col sm:flex-row gap-4 mb-4">
+            <input type="email" name="email" placeholder="Enter Your Email" required class="flex-grow p-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:ring-2 focus:ring-cyan-400 outline-none" />
+            <button type="button" id="sendOtpBtn" class="bg-cyan-600 px-5 py-2 rounded-lg text-white font-medium hover:bg-cyan-500 transition">Send OTP</button>
+          </div>
+          <input type="text" id="otpInput" placeholder="Enter OTP" class="w-full p-3 rounded-lg bg-slate-700/50 border border-slate-600 focus:ring-2 focus:ring-cyan-400 outline-none" />
+        </fieldset>
+
+        <!-- 🔘 Message -->
+        <div id="message" class="text-center text-sm font-semibold mt-2 text-white/80"></div>
+
+        <!-- ✅ Submit Button -->
+        <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-indigo-600 text-white py-3 rounded-lg font-bold text-lg hover:opacity-90 transition hover:scale-105 duration-300">
+          Post & Reunite Item
+        </button>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 🔧 Script -->
+<script>
+  const form = document.getElementById("foundForm");
+  const message = document.getElementById("message");
+  const otpInput = document.getElementById("otpInput");
+  const sendOtpBtn = document.getElementById("sendOtpBtn");
+  const fileInput = document.getElementById("file-upload");
+  const fileName = document.getElementById("file-name");
+
+  // 📤 Update file name on selection
+  fileInput.addEventListener("change", () => {
+    fileName.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : "Upload a Photo (Required)";
+  });
+
+  // 📩 Send OTP
+  sendOtpBtn.addEventListener("click", async () => {
+    const email = form.email.value;
+    if (!email) return alert("Please enter your email first");
+
+    const res = await fetch("/api/otp/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+
+    const data = await res.json();
+    message.textContent = data.message;
+  });
+
+  // 🚀 Submit Form
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = form.email.value;
+    const otp = otpInput.value;
+
+    // ✅ Verify OTP
+    const otpRes = await fetch("/api/otp/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp }),
+    });
+
+    const otpData = await otpRes.json();
+    if (!otpData.success) {
+      message.textContent = otpData.message || "❌ OTP verification failed";
+      return;
+    }
+
+    // 📤 Send form data
+    const formData = new FormData(form);
+    const res = await fetch("/api/items", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      message.textContent = "✅ Item posted successfully!";
+      form.reset();
+      otpInput.value = "";
+      fileName.textContent = "Upload a Photo (Required)";
+    } else {
+      message.textContent = data.message || "❌ Upload failed";
+    }
+  });
+</script>
+</body>
+</html>
