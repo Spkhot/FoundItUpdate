@@ -5,19 +5,30 @@ const mongoose = require("mongoose");
 
 // ✅ POST /api/requests - Create a new lost item request
 exports.createRequest = async (req, res) => {
-  const { productName, location, description, contact, category, reward, email } = req.body;
+  const { productName, description, location, category, reward, email, contact } = req.body;
 
   if (!email || !(await isEmailVerified(email))) {
     return res.status(400).json({ success: false, message: "Email not verified" });
   }
 
   try {
-    const newRequest = await Request.create({ productName, location, description, contact, category, reward, email });
-    res.json({ success: true, message: "Request posted", request: newRequest });
+    const request = await Request.create({
+      productName,
+      description,
+      location,
+      category,
+      reward,
+      email,
+      contact, // ✅ Add this
+    });
+
+    res.status(201).json({ success: true, message: "Request submitted", request });
   } catch (err) {
-    res.status(500).json({ success: false, message: "Failed to post request" });
+    console.error("❌ Error saving request:", err);
+    res.status(500).json({ success: false, message: "Failed to submit request" });
   }
 };
+
 
 // ✅ GET /api/requests - Get all requests
 exports.getAllRequests = async (req, res) => {

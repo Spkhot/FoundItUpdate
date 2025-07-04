@@ -1,14 +1,13 @@
-// models/Request.js
 const mongoose = require("mongoose");
 
 const requestSchema = new mongoose.Schema({
-  productName: { type: String, required: true },
+  productName: String,
   description: String,
-  location: { type: String, required: true },
-  category: { type: String, enum: ["wallet", "id", "key", "documents", "shoes", "other"], required: true },
+  location: String,
+  category: String,
   reward: String,
-  email: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now },
-});
+  email: String,
+  contact: String, // ✅ This must be defined
+}, { timestamps: true });
 
 module.exports = mongoose.model("Request", requestSchema);

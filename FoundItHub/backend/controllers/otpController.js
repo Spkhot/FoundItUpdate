@@ -1,4 +1,3 @@
-// controllers/otpController.js
 const Otp = require("../models/Otp");
 const sendOtpMail = require("../utils/sendEmail");
 
@@ -22,13 +21,20 @@ exports.sendOtp = async (req, res) => {
 exports.verifyOtp = async (req, res) => {
   const { email, otp } = req.body;
 
-  const existing = await Otp.findOne({ email, otp });
-  if (!existing) {
-    return res.status(400).json({ success: false, message: "Invalid OTP" });
-  }
+  try {
+    const existing = await Otp.findOne({ email, otp: otp.toString() });
 
-  await Otp.deleteMany({ email }); // OTP used once
-  res.json({ success: true, message: "Email verified" });
+    if (!existing) {
+      return res.status(400).json({ success: false, message: "Invalid OTP" });
+    }
+
+    await Otp.deleteMany({ email }); // OTP used once
+    res.json({ success: true, message: "Email verified" });
+
+  } catch (err) {
+    console.error("OTP verification error:", err);
+    res.status(500).json({ success: false, message: "Something went wrong" });
+  }
 };
 
 // ✅ Function for controllers to check if email is verified

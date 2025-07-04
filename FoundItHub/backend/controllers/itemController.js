@@ -3,6 +3,9 @@ const { isEmailVerified } = require("./otpController");
 
 // ✅ POST /api/items - Upload found item
 exports.createItem = async (req, res) => {
+  console.log("📩 Form data:", req.body);
+  console.log("🖼️ Uploaded file:", req.file); // Log this!
+
   const { productName, description, location, category, contact, email } = req.body;
   const imageUrl = req.file?.path;
 
@@ -31,6 +34,7 @@ exports.createItem = async (req, res) => {
     res.status(500).json({ success: false, message: "Failed to post item" });
   }
 };
+
 
 // ✅ GET /api/items - Get all found items
 exports.getAllItems = async (req, res) => {
