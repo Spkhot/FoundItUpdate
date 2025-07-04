@@ -63,6 +63,7 @@
         </select>
 
         <input type="text" name="reward" placeholder="Reward (optional)" class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none" />
+        <input type="text" name="contact" placeholder="Your Contact Number" required class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none" />
         <input type="email" name="email" placeholder="Your Email" required class="w-full bg-slate-700/50 border border-slate-600 rounded-lg p-3 focus:ring-2 focus:ring-cyan-400 outline-none" />
 
         <div class="flex flex-col sm:flex-row gap-4">
@@ -121,13 +122,15 @@
     }
 
     const formData = {
-      productName: form.productName.value,
-      description: form.description.value,
-      location: form.location.value,
-      category: form.category.value,
-      reward: form.reward.value,
-      email: email,
-    };
+  productName: form.productName.value,
+  description: form.description.value,
+  location: form.location.value,
+  category: form.category.value,
+  reward: form.reward.value,
+  email: email,
+  contact: form.contact.value, // ✅ added contact field
+};
+
 
     const res = await fetch("/api/requests", {
       method: "POST",

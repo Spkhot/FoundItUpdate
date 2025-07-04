@@ -100,21 +100,21 @@
         const item = data.item;
 
         itemDetails.innerHTML = `
-          <div class="flex flex-col md:flex-row gap-6">
-            <div class="md:w-2/5">
-              <img src="${item.imageUrl}" alt="${item.productName}" class="w-full h-auto rounded-xl shadow-lg border border-white/10" />
-            </div>
-            <div class="md:w-3/5 flex flex-col gap-3">
-              <h2 class="text-3xl font-bold text-cyan-300">${item.productName}</h2>
-              <p><strong class="text-slate-400">📍 Location:</strong> ${item.location}</p>
-              <p><strong class="text-slate-400">📅 Posted:</strong> ${new Date(item.createdAt).toLocaleString()}</p>
-              <p><strong class="text-slate-400">📂 Category:</strong> ${item.category}</p>
-              <p><strong class="text-slate-400">📞 Contact:</strong> ${item.contact}</p>
-              <p><strong class="text-slate-400">📧 Email:</strong> ${item.email}</p>
-              ${item.description ? `<p class="text-slate-300 mt-2"><strong>📝 Description:</strong> ${item.description}</p>` : ""}
-            </div>
-          </div>
-        `;
+  <div class="flex flex-col md:flex-row gap-6">
+    <div class="md:w-2/5">
+      <img src="${item.imageUrl}" alt="${item.productName}" class="w-full h-auto rounded-xl shadow-lg border border-white/10" />
+    </div>
+    <div class="md:w-3/5 flex flex-col gap-3">
+      <h2 class="text-3xl font-bold text-cyan-300">${item.productName}</h2>
+      <p><strong class="text-slate-400">📍 Location:</strong> ${item.location}</p>
+      <p><strong class="text-slate-400">📅 Posted:</strong> ${new Date(item.createdAt).toLocaleString()}</p>
+      <p><strong class="text-slate-400">📂 Category:</strong> ${item.category}</p>
+      <p><strong class="text-slate-400">📞 Contact:</strong> ${item.contact}</p>
+      ${item.description ? `<p class="text-slate-300 mt-2"><strong>📝 Description:</strong> ${item.description}</p>` : ""}
+    </div>
+  </div>
+`;
+
 
         deleteSection.classList.remove("hidden");
       } else {

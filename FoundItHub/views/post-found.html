@@ -5,7 +5,7 @@
   <title>Report a Found Item | FoundIt Hub</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" href="images/logo.png" type="image/png" />
+    <link rel="icon" href="/FoundItHub/public/images/logo.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     body {
@@ -110,7 +110,9 @@
 
   // 📤 Update file name on selection
   fileInput.addEventListener("change", () => {
-    fileName.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : "Upload a Photo (Required)";
+    fileName.textContent = fileInput.files.length > 0
+      ? fileInput.files[0].name
+      : "Upload a Photo (Required)";
   });
 
   // 📩 Send OTP
@@ -135,7 +137,7 @@
     const email = form.email.value;
     const otp = otpInput.value;
 
-    // ✅ Verify OTP
+    // ✅ OTP Verification
     const otpRes = await fetch("/api/otp/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -148,23 +150,46 @@
       return;
     }
 
-    // 📤 Send form data
+    // 📤 Submit item
     const formData = new FormData(form);
     const res = await fetch("/api/items", {
       method: "POST",
       body: formData,
     });
 
-    const data = await res.json();
+    let data;
+    try {
+      data = await res.json();
+    } catch (err) {
+      message.textContent = "❌ Server error (Invalid JSON). Check console.";
+      console.error("❌ JSON Parse Error:", err);
+      return;
+    }
+
     if (data.success) {
-      message.textContent = "✅ Item posted successfully!";
+      message.innerHTML = `
+        <div class="bg-green-600/80 text-white rounded-lg px-4 py-3 mt-4 text-center shadow-lg">
+          ✅ <strong>Success!</strong> Your found item has been posted.
+        </div>
+      `;
       form.reset();
       otpInput.value = "";
       fileName.textContent = "Upload a Photo (Required)";
+
+      // Optional: auto-hide success after 5s
+      setTimeout(() => {
+        message.innerHTML = "";
+      }, 5000);
     } else {
-      message.textContent = data.message || "❌ Upload failed";
+      message.innerHTML = `
+        <div class="bg-red-600/80 text-white rounded-lg px-4 py-3 mt-4 text-center shadow-lg">
+          ❌ ${data.message || "Upload failed. Try again."}
+        </div>
+      `;
     }
   });
 </script>
+
+
 </body>
 </html>
